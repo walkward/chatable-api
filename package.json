@@ -4,13 +4,15 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "shins": "^2.2.0",
     "swagger-node-codegen": "^1.1.0",
     "widdershins": "^3.0.2"
   },
   "devDependencies": {},
   "scripts": {
     "swagger": "snc ./swagger.yaml -o ./api",
-    "docs": "widdershins ./swagger.yaml ./docs/index.md"
+    "docs": "widdershins ./swagger.yaml ./docs/index.md",
+    "shins": "node shins.js"
   },
   "repository": {
     "type": "git",
