@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "arapaho": "^1.0.1",
     "shins": "^2.2.0",
     "swagger-node-codegen": "^1.1.0",
     "widdershins": "^3.0.2"
@@ -12,7 +13,8 @@
   "scripts": {
     "swagger": "snc ./swagger.yaml -o ./api",
     "docs": "widdershins ./swagger.yaml ./docs/index.md",
-    "shins": "node shins.js"
+    "shins": "node shins.js",
+    "docs:watch": "node node_modules/shins/arapaho.js"
   },
   "repository": {
     "type": "git",
