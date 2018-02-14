@@ -1,0 +1,1486 @@
+---
+openapi: 3.0.0
+info:
+  title: Connectable
+  description: Connectable API
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  version: 1.0.0
+servers:
+- url: https://connectable.heroku.com/api
+  description: Staging Environment
+paths:
+  /users:
+    post:
+      summary: createuser
+      description: Create a new user.
+      responses:
+        201:
+          description: Successfully created new user.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/customer'
+        401:
+          description: Authentication failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/userRequestBody'
+  /users/{id}:
+    get:
+      summary: getuser
+      description: Returns the full user object.
+      parameters:
+      - name: id
+        in: path
+        description: The users primary id
+        required: true
+      responses:
+        200:
+          description: Successfully retrieved user.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+        401:
+          description: Authentication failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        404:
+          description: No user could be found for the given id.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+    put:
+      summary: updateuser
+      description: Updates the specified user object.
+      parameters:
+      - name: id
+        in: path
+        description: The users primary id
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: user updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+        401:
+          description: Authentication failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        404:
+          description: No user could be found for the given id.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/userRequestBody'
+        required: true
+    delete:
+      summary: deleteuser
+      description: Deletes the user and all of their associated resources.
+      parameters:
+      - name: id
+        in: path
+        description: The users primary id
+        required: true
+      responses:
+        200:
+          description: user successfully deleted.
+          content:
+            application/json:
+              schema:
+                type: string
+        401:
+          description: Authentication failed.
+        404:
+          description: No user could be found for the given id.
+    parameters:
+    - name: id
+      in: path
+      description: The users primary id
+      required: true
+      schema:
+        type: string
+  /users/{id}/billing:
+    get:
+      summary: getBilling
+      description: Returns the stripe customer object.
+      responses:
+        200:
+          description: The Stripe customer object exists and is returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/customer'
+        401:
+          description: Authentication failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        404:
+          description: A Stripe customer could not be found for the given user id.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+    put:
+      summary: updateBilling
+      description: Update a stripe customer object.
+      responses:
+        200:
+          description: Successfully updated Stripe customer object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/customer'
+        401:
+          description: Authentication failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        404:
+          description: A Stripe customer could not be found for the given user id.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+    post:
+      summary: createBilling
+      description: Create a new stripe customer object.
+      responses:
+        201:
+          description: Successfully created Stripe customer.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/customer'
+        401:
+          description: Authentication failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        404:
+          description: Bad user id.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+    delete:
+      summary: deleteBilling
+      description: Delete the stipe customer object.
+      responses:
+        200:
+          description: Successfully deleted.
+          content:
+            application/json:
+              schema:
+                type: string
+        401:
+          description: Authentication failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        404:
+          description: A Stripe customer could not be found for the given user id.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+    parameters:
+    - name: id
+      in: path
+      description: The users primary id
+      required: true
+      schema:
+        type: string
+  /users/{id}/billing/invoices:
+    get:
+      summary: getinvoices
+      description: Returns the invoices associated with a users account.
+      responses:
+        200:
+          description: The invoices were successfully retrieved.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/invoice'
+        204:
+          description: No invoices could be found for the given user.
+          content:
+            application/json:
+              schema:
+                type: string
+        400:
+          description: Invalid request body. The message will vary depending on the
+            cause.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        401:
+          description: Authentication failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+    parameters:
+    - name: id
+      in: path
+      description: The users primary id
+      required: true
+      schema:
+        type: string
+    - name: limit
+      in: query
+      description: The maximum number of line items to return. Default value is 10.
+      schema:
+        type: integer
+    - name: page
+      in: query
+      description: The pagination page of results to return.
+      schema:
+        type: integer
+  /users/{id}/billing/invoices/{invoiceId}:
+    get:
+      summary: getinvoice
+      description: Returns an invoice object per the given invoiceId.
+      responses:
+        200:
+          description: invoice successfully retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/invoice'
+        401:
+          description: Authentication failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        404:
+          description: Bad user id or invoice could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+    parameters:
+    - name: invoiceId
+      in: path
+      description: invoice primary id.
+      required: true
+      schema:
+        type: string
+    - name: id
+      in: path
+      description: The users primary id
+      required: true
+      schema:
+        type: string
+  /users/{id}/billing/source:
+    get:
+      summary: getBillingsource
+      description: Returns the billing source associated with a users account.
+      responses:
+        200:
+          description: user billing source successfully retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/sources'
+        204:
+          description: user billing source does not exist.
+          content:
+            application/json:
+              schema:
+                type: string
+        401:
+          description: Authentication failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        404:
+          description: Bad user id.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+    put:
+      summary: updateBillingsource
+      description: Updates the billing source associated with a users account.
+      responses:
+        200:
+          description: user billing source successfully updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/sources'
+        401:
+          description: Authentication failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        404:
+          description: Bad user id or source does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+    post:
+      summary: createBillingsource
+      description: Create a new billing source associated with a users account.
+      responses:
+        201:
+          description: Billing source successfully created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/source'
+        401:
+          description: Authentication failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        404:
+          description: Bad user id.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+    delete:
+      summary: deleteBillingsource
+      description: Delete the billing source associated with a users account.
+      responses:
+        200:
+          description: Successfully deleted.
+          content:
+            application/json:
+              schema:
+                type: string
+        401:
+          description: Authentication failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        404:
+          description: Bad user id or billing source not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+    parameters:
+    - name: id
+      in: path
+      description: The users primary id
+      required: true
+      schema:
+        type: string
+components:
+  schemas:
+    user:
+      title: Root Type for user
+      description: The root of the user type's schema.
+      type: object
+      properties:
+        email:
+          description: The user's email
+          type: string
+        email_verified:
+          description: true if the user's email is verified, false otherwise
+          type: boolean
+        username:
+          description: The user's username
+          type: string
+        phone_number:
+          description: The user's phone number (following the E.164 recommendation),
+            only valid for users from SMS connections
+          type: string
+        phone_verified:
+          description: true if the user's phone_number is verified, false otherwise,
+            only valid for users from SMS connections
+          type: boolean
+        user_id:
+          description: The user's unique identifier
+          type: string
+        created_at:
+          description: The date when the user was created
+          type: string
+        updated_at:
+          description: The date when the user was last updated (modified)
+          type: string
+        identities:
+          description: An array of objects with information about the user's identities.
+            More than one will exists in case accounts are linked
+          type: array
+          items:
+            $ref: '#/components/schemas/identity'
+        picture:
+          description: The user's picture
+          type: string
+        name:
+          description: The user's name
+          type: string
+        nickname:
+          description: The user's nickname
+          type: string
+        multifactor:
+          description: The list of multifactor providers that the user has enrolled
+            to
+          type: array
+          items:
+            type: string
+        last_ip:
+          description: The last login IP address
+          type: string
+        last_login:
+          description: The last login date for this user
+          type: string
+        logins_count:
+          format: int32
+          description: The number of logins for this user
+          type: integer
+        blocked:
+          description: Indicates whether the user was blocked by an administrator
+            or not
+          type: boolean
+        given_name:
+          description: The user's given name (first name)
+          type: string
+        family_name:
+          description: The user's family name (last name)
+          type: string
+    identity:
+      title: Root Type for identity
+      description: The root of the identity type's schema.
+      type: object
+      properties:
+        connection:
+          description: The name of the connection for the identity.
+          type: string
+        user_id:
+          description: The unique identifier for the user for the identity.
+          type: string
+        provider:
+          description: The type of identity provider.
+          type: string
+        isSocial:
+          description: true if the identity provider is a social provider, falses
+            otherwise
+          type: boolean
+    customer:
+      title: Root Type for customer
+      description: The root of the customer type's schema.
+      type: object
+      properties:
+        id:
+          description: Unique identifier for the object.
+          type: string
+        object:
+          description: String representing the object’s type. Objects of the same
+            type share the same value.
+          type: string
+        account_balance:
+          format: int32
+          description: Current balance, if any, being stored on the customer’s account.
+            If negative, the customer has credit to apply to the next invoice. If
+            positive, the customer has an amount owed that will be added to the next
+            invoice. The balance does not refer to any unpaid invoices; it solely
+            takes into account amounts that have yet to be successfully applied to
+            any invoice. This balance is only taken into account for recurring billing
+            purposes (i.e., subscriptions, invoices, invoice items).
+          type: integer
+        created:
+          format: int32
+          description: Time at which the object was created. Measured in seconds since
+            the Unix epoch.
+          type: integer
+        currency:
+          description: Three-letter ISO code for the currency the customer can be
+            charged in for recurring billing purposes.
+          type: string
+        default_source:
+          description: ID of the default source attached to this customer.
+          type: string
+        delinquent:
+          description: When the customer’s latest invoice is billed by charging automatically,
+            delinquent is true if the invoice’s latest charge is failed. When the
+            customer’s latest invoice is billed by sending an invoice, delinquent
+            is true if the invoice is not paid by its due date.
+          type: boolean
+        description:
+          description: An arbitrary string attached to the object. Often useful for
+            displaying to users.
+          type: string
+        discount:
+          $ref: '#/components/schemas/discount'
+          description: Describes the current discount active on the customer, if there
+            is one.
+        email:
+          description: The customer’s email address.
+          type: string
+        invoice_prefix:
+          description: The prefix for the customer used to generate unique invoice
+            numbers.
+          type: string
+        livemode:
+          description: Flag indicating whether the object exists in live mode or test
+            mode.
+          type: boolean
+        shipping:
+          $ref: '#/components/schemas/shipping'
+          description: Mailing and shipping address for the customer. Appears on invoices
+            emailed to this customer.
+        subscriptions:
+          $ref: '#/components/schemas/subscriptions'
+        sources:
+          $ref: '#/components/schemas/sources'
+    shipping:
+      properties:
+        address:
+          $ref: '#/components/schemas/address'
+          description: customer shipping address.
+        name:
+          description: customer name.
+          type: string
+        phone:
+          description: customer phone (including extension).
+          type: string
+    address:
+      title: Root Type for address
+      description: The root of the address type's schema.
+      type: object
+      properties:
+        city:
+          description: City/District/Suburb/Town/Village.
+          type: string
+        country:
+          description: 2-letter country code.
+          type: string
+        line1:
+          description: address line 1 (Street address/PO Box/Company name).
+          type: string
+        line2:
+          description: address line 2 (Apartment/Suite/Unit/Building).
+          type: string
+        postal_code:
+          description: ZIP or postal code
+          type: string
+        state:
+          description: State/County/Province/Region.
+          type: string
+    discount:
+      title: Root Type for discount
+      description: The root of the discount type's schema.
+      type: object
+      properties:
+        object:
+          description: String representing the object’s type. Objects of the same
+            type share the same value.
+          type: string
+        coupon:
+          $ref: '#/components/schemas/coupon'
+          description: Hash describing the coupon applied to create this discount.
+          properties:
+            id:
+              type: string
+            object:
+              type: string
+            amount_off:
+              type: object
+            created:
+              format: int32
+              type: integer
+            currency:
+              type: object
+            duration:
+              type: string
+            duration_in_months:
+              format: int32
+              type: integer
+            livemode:
+              type: boolean
+            max_redemptions:
+              type: object
+            metadata:
+              type: object
+            percent_off:
+              format: int32
+              type: integer
+            redeem_by:
+              type: object
+            times_redeemed:
+              format: int32
+              type: integer
+            valid:
+              type: boolean
+        customer:
+          type: string
+        end:
+          format: int32
+          description: If the coupon has a duration of repeating, the date that this
+            discount will end. If the coupon has a duration of once or forever, this
+            attribute will be null.
+          type: integer
+        start:
+          format: int32
+          description: Date that the coupon was applied.
+          type: integer
+        subscription:
+          description: The subscription that this coupon is applied to, if it is applied
+            to a particular subscription.
+          type: string
+    coupon:
+      title: Root Type for coupon
+      description: The root of the coupon type's schema.
+      type: object
+      properties:
+        id:
+          description: Unique identifier for the object.
+          type: string
+        object:
+          description: String representing the object’s type. Objects of the same
+            type share the same value.
+          type: string
+        amount_off:
+          description: Amount (in the currency specified) that will be taken off the
+            subtotal of any invoices for this customer.
+          type: object
+        created:
+          format: int32
+          description: Time at which the object was created. Measured in seconds since
+            the Unix epoch.
+          type: integer
+        currency:
+          description: If amount_off has been set, the three-letter ISO code for the
+            currency of the amount to take off.
+          type: string
+        duration:
+          description: One of forever, once, and repeating. Describes how long a customer
+            who applies this coupon will get the discount.
+          type: string
+        duration_in_months:
+          format: int32
+          description: If duration is repeating, the number of months the coupon applies.
+            Null if coupon duration is forever or once.
+          type: integer
+        livemode:
+          description: Flag indicating whether the object exists in live mode or test
+            mode.
+          type: boolean
+        max_redemptions:
+          description: Maximum number of times this coupon can be redeemed, in total,
+            before it is no longer valid.
+          type: integer
+        percent_off:
+          format: int32
+          description: Percent that will be taken off the subtotal of any invoices
+            for this customer for the duration of the coupon. For example, a coupon
+            with percent_off of 50 will make a $100 invoice $50 instead.
+          type: integer
+        redeem_by:
+          format: date
+          description: Date after which the coupon can no longer be redeemed.
+          type: string
+        times_redeemed:
+          format: int32
+          description: Number of times this coupon has been applied to a customer.
+          type: integer
+        valid:
+          description: Taking account of the above properties, whether this coupon
+            can still be applied to a customer.
+          type: boolean
+    subscriptions:
+      title: Root Type for subscriptions
+      description: The root of the subscriptions type's schema.
+      type: object
+      properties:
+        object:
+          description: String representing the object’s type. Objects of the same
+            type share the same value. Always has the value “list”.
+          type: string
+        data:
+          description: Array of subscription objects.
+          type: array
+          items:
+            $ref: '#/components/schemas/subscription'
+        has_more:
+          description: True if this list has another page of items after this one
+            that can be fetched.
+          type: boolean
+        total_count:
+          format: int32
+          type: integer
+        url:
+          description: The URL where this list can be accessed.
+          type: string
+    subscription:
+      title: Root Type for subscription
+      description: The root of the subscription type's schema.
+      type: object
+      properties:
+        id:
+          description: Unique identifier for the object.
+          type: string
+        object:
+          description: String representing the object’s type. Objects of the same
+            type share the same value.
+          type: string
+        application_fee_percent:
+          description: A non-negative decimal between 0 and 100, with at most two
+            decimal places. This represents the percentage of the subscription invoice
+            subtotal that will be transferred to the application owner’s Stripe account.
+          type: number
+        billing:
+          description: Either charge_automatically, or send_invoice. When charging
+            automatically, Stripe will attempt to pay this subscription at the end
+            of the cycle using the default source attached to the customer. When sending
+            an invoice, Stripe will email your customer an invoice with payment instructions.
+          type: string
+        billing_cycle_anchor:
+          format: int32
+          description: Determines the date of the first full invoice, and, for plans
+            with month or year intervals, the day of the month for subsequent invoices.
+          type: integer
+        cancel_at_period_end:
+          description: If the subscription has been canceled with the at_period_end
+            flag set to true, cancel_at_period_end on the subscription will be true.
+            You can use this attribute to determine whether a subscription that has
+            a status of active is scheduled to be canceled at the end of the current
+            period.
+          type: boolean
+        canceled_at:
+          format: int32
+          description: If the subscription has been canceled, the date of that cancellation.
+            If the subscription was canceled with cancel_at_period_end, canceled_at
+            will still reflect the date of the initial cancellation request, not the
+            end of the subscription period when the subscription is automatically
+            moved to a canceled state. Measured in seconds since the Unix epoch.
+          type: integer
+        created:
+          format: int32
+          description: Time at which the object was created. Measured in seconds since
+            the Unix epoch.
+          type: integer
+        current_period_end:
+          format: int32
+          description: End of the current period that the subscription has been invoiced
+            for. At the end of this period, a new invoice will be created.
+          type: integer
+        current_period_start:
+          format: int32
+          description: Start of the current period that the subscription has been
+            invoiced for.
+          type: integer
+        customer:
+          description: ID of the customer who owns the subscription.
+          type: string
+        days_until_due:
+          description: Number of days a customer has to pay invoices generated by
+            this subscription. This value will be null for subscriptions where billing=charge_automatically.
+          type: integer
+        discount:
+          description: Describes the current discount applied to this subscription,
+            if there is one. When billing, a discount applied to a subscription overrides
+            a discount applied on a customer-wide basis.
+          type: number
+        ended_at:
+          format: int32
+          description: If the subscription has ended, the date the subscription ended.
+          type: integer
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/subscription_items'
+          properties:
+            object:
+              type: string
+            data:
+              type: array
+              items: {}
+            has_more:
+              type: boolean
+            total_count:
+              format: int32
+              type: integer
+            url:
+              type: string
+        livemode:
+          description: Flag indicating whether the object exists in live mode or test
+            mode.
+          type: boolean
+        plan:
+          $ref: '#/components/schemas/plan'
+          description: Hash describing the plan the customer is subscribed to.
+          properties:
+            id:
+              type: string
+            object:
+              type: string
+            amount:
+              format: int32
+              type: integer
+            created:
+              format: int32
+              type: integer
+            currency:
+              type: string
+            interval:
+              type: string
+            interval_count:
+              format: int32
+              type: integer
+            livemode:
+              type: boolean
+            metadata:
+              type: object
+            nickname:
+              type: object
+            product:
+              type: string
+            trial_period_days:
+              format: int32
+              type: integer
+        quantity:
+          format: int32
+          description: The quantity of the plan to which the customer should be subscribed.
+            For example, if your plan is $10/user/month, and your customer has 5 users,
+            you could pass 5 as the quantity to have the customer charged $50 (5 x
+            $10) monthly.
+          type: integer
+        start:
+          format: int32
+          description: Date the most recent update to this subscription started.
+          type: integer
+        status:
+          description: Possible values are trialing, active, past_due, canceled, or
+            unpaid. A subscription still in its trial period is trialing and moves
+            to active when the trial period is over. If subscription billing=charge_automatically
+            it becomes past_due when payment to renew it fails and canceled or unpaid
+            (depending on your subscriptions settings) when Stripe has exhausted all
+            payment retry attempts. If subscription billing=send_invoice it becomes
+            past_due when its invoice is not paid by the due date, and canceled or
+            unpaid if it is still not paid by an additional deadline after that. Note
+            that when a subscription has a status of unpaid, no subsequent invoices
+            will be attempted (invoices will be created, but then immediately automatically
+            closed.) After receiving updated payment information from a customer,
+            you may choose to reopen and pay their closed invoices.
+          type: string
+        tax_percent:
+          description: If provided, each invoice created by this subscription will
+            apply the tax rate, increasing the amount billed to the customer.
+          type: number
+        trial_end:
+          format: int32
+          description: If the subscription has a trial, the end of that trial.
+          type: integer
+        trial_start:
+          format: int32
+          description: Measured in seconds since the Unix epoch.
+          type: integer
+    plan:
+      title: Root Type for plan
+      description: The root of the plan type's schema.
+      type: object
+      properties:
+        id:
+          description: Unique identifier for the object.
+          type: string
+        object:
+          description: String representing the object’s type. Objects of the same
+            type share the same value.
+          type: string
+        amount:
+          format: int32
+          description: The amount in cents to be charged on the interval specified.
+          type: integer
+        created:
+          format: int32
+          description: Time at which the object was created. Measured in seconds since
+            the Unix epoch.
+          type: integer
+        currency:
+          description: Three-letter ISO currency code, in lowercase. Must be a supported
+            currency.
+          type: string
+        interval:
+          description: One of day, week, month or year. The frequency with which a
+            subscription should be billed.
+          type: string
+        interval_count:
+          format: int32
+          description: The number of intervals (specified in the interval property)
+            between each subscription billing. For example, interval=month and interval_count=3
+            bills every 3 months.
+          type: integer
+        livemode:
+          description: Flag indicating whether the object exists in live mode or test
+            mode.
+          type: boolean
+        nickname:
+          description: A brief description of the plan, hidden from customers.
+          type: string
+        product:
+          description: The product whose pricing this plan determines.
+          type: string
+        trial_period_days:
+          format: int32
+          type: integer
+    sources:
+      title: Root Type for sources
+      description: The root of the sources type's schema.
+      type: object
+      properties:
+        object:
+          description: A string describing the object type returned.
+          type: string
+        data:
+          description: source object. Can be card or bank account.
+          type: array
+          items:
+            $ref: '#/components/schemas/source'
+        has_more:
+          description: Whether or not there are more elements available after this
+            set. If false, this set comprises the end of the list.
+          type: boolean
+        total_count:
+          format: int32
+          type: integer
+        url:
+          description: The URL for accessing this list.
+          type: string
+    source:
+      title: Root Type for source
+      description: The root of the source type's schema.
+      required:
+      - number
+      type: object
+      properties:
+        id:
+          description: Unique identifier for the object.
+          type: string
+        object:
+          description: The type of payment source. Should be "card".
+          type: string
+        address_city:
+          description: City/District/Suburb/Town/Village.
+          type: string
+        address_country:
+          description: Billing address country, if provided when creating card.
+          type: string
+        address_line1:
+          description: address line 1 (Street address/PO Box/Company name).
+          type: string
+        address_line1_check:
+          description: 'If address_line1 was provided, results of the check: pass,
+            fail, unavailable, or unchecked.'
+          type: string
+        address_line2:
+          description: address line 2 (Apartment/Suite/Unit/Building).
+          type: string
+        address_state:
+          description: State/County/Province/Region.
+          type: string
+        address_zip:
+          description: Zip/Postal Code.
+          type: string
+        address_zip_check:
+          description: ZIP or postal code
+          type: string
+        brand:
+          description: Card brand. Can be Visa, American Express, MasterCard, Discover,
+            JCB, Diners Club, or Unknown.
+          type: string
+        country:
+          description: Two-letter ISO code representing the country of the card. You
+            could use this attribute to get a sense of the international breakdown
+            of cards you’ve collected.
+          type: string
+        customer:
+          description: The customer that this card belongs to. This attribute will
+            not be in the card object if the card belongs to an account or recipient
+            instead.
+          type: string
+        cvc_check:
+          description: 'If a CVC was provided, results of the check: pass, fail, unavailable,
+            or unchecked.'
+          type: string
+        dynamic_last4:
+          description: (For tokenized numbers only.) The last four digits of the device
+            account number.
+          type: string
+        exp_month:
+          format: int32
+          description: Two digit number representing the card's expiration month.
+          type: integer
+        exp_year:
+          format: int32
+          description: Two or four digit number representing the card's expiration
+            year.
+          type: integer
+        fingerprint:
+          description: Uniquely identifies this particular bank account. You can use
+            this attribute to check whether two bank accounts are the same.
+          type: string
+        funding:
+          description: Card funding type. Can be credit, debit, prepaid, or unknown.
+          type: string
+        last4:
+          description: The last 4 digits of the card.
+          type: string
+        name:
+          description: Cardholder's full name.
+          type: string
+        tokenization_method:
+          description: If the card number is tokenized, this is the method that was
+            used. Can be apple_pay or android_pay.
+          type: string
+    invoice:
+      title: Root Type for invoice
+      description: The root of the invoice type's schema.
+      type: object
+      properties:
+        id:
+          description: Unique identifier for the object.
+          type: string
+        object:
+          description: String representing the object’s type. Objects of the same
+            type share the same value.
+          type: string
+        amount_due:
+          format: int32
+          description: Final amount due at this time for this invoice. If the invoice’s
+            total is smaller than the minimum charge amount, for example, or if there
+            is account credit that can be applied to the invoice, the amount_due may
+            be 0. If there is a positive starting_balance for the invoice (the customer
+            owes money), the amount_due will also take that into account. The charge
+            that gets generated for the invoice will be for the amount specified in
+            amount_due.
+          type: integer
+        application_fee:
+          description: The fee in cents that will be applied to the invoice and transferred
+            to the application owner’s Stripe account when the invoice is paid.
+          type: integer
+        attempt_count:
+          format: int32
+          description: Number of payment attempts made for this invoice, from the
+            perspective of the payment retry schedule. Any payment attempt counts
+            as the first attempt, and subsequently only automatic retries increment
+            the attempt count. In other words, manual payment attempts after the first
+            attempt do not affect the retry schedule.
+          type: integer
+        attempted:
+          description: Whether an attempt has been made to pay the invoice. An invoice
+            is not attempted until 1 hour after the invoice.created webhook, for example,
+            so you might not want to display that invoice as unpaid to your users.
+          type: boolean
+        billing:
+          description: Either charge_automatically, or send_invoice. When charging
+            automatically, Stripe will attempt to pay this invoice using the default
+            source attached to the customer. When sending an invoice, Stripe will
+            email this invoice to the customer with payment instructions.
+          type: string
+        charge:
+          description: ID of the latest charge generated for this invoice, if any.
+          type: string
+        closed:
+          description: Whether the invoice is still trying to collect payment. An
+            invoice is closed if it’s either paid or it has been marked closed. A
+            closed invoice will no longer attempt to collect payment.
+          type: boolean
+        currency:
+          description: Three-letter ISO currency code, in lowercase. Must be a supported
+            currency.
+          type: string
+        customer:
+          description: The customer id for the given invoice.
+          type: string
+        date:
+          format: int32
+          description: Time at which the object was created. Measured in seconds since
+            the Unix epoch.
+          type: integer
+        description:
+          description: An arbitrary string attached to the object. Often useful for
+            displaying to users.
+          type: string
+        discount:
+          $ref: '#/components/schemas/discount'
+          description: hash, discount object
+        due_date:
+          format: int32
+          description: The date on which payment for this invoice is due. This value
+            will be null for invoices where billing=charå†ge_automatically.
+          type: integer
+        ending_balance:
+          format: int32
+          description: Ending customer balance after the invoice is frozen. invoices
+            are frozen approximately an hour after successful webhook delivery or
+            when payment collection is attempted for the invoice. If the invoice has
+            not been frozen yet, this will be null.
+          type: integer
+        forgiven:
+          description: Whether the invoice has been forgiven. Forgiving an invoice
+            instructs us to update the subscription status as if the invoice were
+            successfully paid. Once an invoice has been forgiven, it cannot be unforgiven
+            or reopened.
+          type: boolean
+        lines:
+          $ref: '#/components/schemas/lines'
+          description: 'The individual line items that make up the invoice. lines
+            is sorted as follows: invoice items in reverse chronological order, followed
+            by the subscription, if any.'
+          properties:
+            data:
+              type: array
+              items: {}
+            has_more:
+              type: boolean
+            object:
+              type: string
+            url:
+              type: string
+        livemode:
+          description: Flag indicating whether the object exists in live mode or test
+            mode.
+          type: boolean
+        next_payment_attempt:
+          description: The time at which payment will next be attempted. This value
+            will be null for invoices where billing=send_invoice.
+          type: integer
+        number:
+          description: A unique, identifying string that appears on emails sent to
+            the customer for this invoice. This starts with the customer’s unique
+            invoice_prefix if it is specified.
+          type: string
+        paid:
+          description: Whether payment was successfully collected for this invoice.
+            An invoice can be paid (most commonly) with a charge or with credit from
+            the customer’s account balance.
+          type: boolean
+        period_end:
+          format: int32
+          description: End of the usage period during which invoice items were added
+            to this invoice.
+          type: integer
+        period_start:
+          format: int32
+          description: Start of the usage period during which invoice items were added
+            to this invoice.
+          type: integer
+        receipt_number:
+          description: This is the transaction number that appears on email receipts
+            sent for this invoice.
+          type: string
+        starting_balance:
+          format: int32
+          description: Starting customer balance before the invoice is frozen. If
+            the invoice has not been frozen yet, this will be the current customer
+            balance.
+          type: integer
+        statement_descriptor:
+          description: Extra information about an invoice for the customer’s credit
+            card statement.
+          type: string
+        subscription:
+          description: The subscription that this invoice was prepared for, if any.
+          type: string
+        subtotal:
+          format: int32
+          description: Total of all subscriptions, invoice items, and prorations on
+            the invoice before any discount is applied.
+          type: integer
+        tax:
+          description: The amount of tax included in the total, calculated from tax_percent
+            and the subtotal. If no tax_percent is defined, this value will be null.
+          type: integer
+        tax_percent:
+          description: This percentage of the subtotal has been added to the total
+            amount of the invoice, including invoice line items and discounts. This
+            field is inherited from the subscription’s tax_percent field, but can
+            be changed before the invoice is paid. This field defaults to null.
+          type: integer
+        total:
+          format: int32
+          description: Total after discount.
+          type: integer
+        webhooks_delivered_at:
+          format: int32
+          description: The time at which webhooks for this invoice were successfully
+            delivered (if the invoice had no webhooks to deliver, this will match
+            date). invoice payment is delayed until webhooks are delivered, or until
+            all webhook delivery attempts have been exhausted.
+          type: integer
+    lines:
+      title: Root Type for lines
+      description: The root of the lines type's schema.
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/line_item'
+          description: ' '
+        has_more:
+          description: True if this list has another page of items after this one
+            that can be fetched.
+          type: boolean
+        object:
+          description: String representing the object’s type. Objects of the same
+            type share the same value. Always has the value “list”.
+          type: string
+        url:
+          description: The URL where this list can be accessed.
+          type: string
+    period:
+      title: Root Type for period
+      description: The root of the period type's schema.
+      type: object
+      properties:
+        start:
+          format: int32
+          type: integer
+        end:
+          format: int32
+          type: integer
+    error:
+      title: Root Type for error
+      description: The root of the error type's schema.
+      type: object
+      properties:
+        status:
+          description: The status member represents the HTTP status code associated
+            with the problem.
+          type: string
+        source:
+          description: The source member is used to indicate which part of the request
+            document caused the error.
+          type: string
+          properties:
+            pointer:
+              type: string
+        title:
+          description: A generic error message.
+          type: string
+        detail:
+          description: Detailed error message.
+          type: string
+    userRequestBody:
+      title: Root Type for user
+      description: The root of the user type's schema.
+      type: object
+      properties:
+        email:
+          description: The user's email
+          type: string
+        username:
+          description: The user's username
+          type: string
+        phone_number:
+          description: The user's phone number (following the E.164 recommendation),
+            only valid for users from SMS connections
+          type: string
+        phone_verified:
+          description: true if the user's phone_number is verified, false otherwise,
+            only valid for users from SMS connections
+          type: boolean
+        picture:
+          description: The user's picture
+          type: string
+        name:
+          description: The user's name
+          type: string
+        nickname:
+          description: The user's nickname
+          type: string
+        last_ip:
+          description: The last login IP address
+          type: string
+        last_login:
+          description: The last login date for this user
+          type: string
+        given_name:
+          description: The user's given name (first name)
+          type: string
+        family_name:
+          description: The user's family name (last name)
+          type: string
+    subscription_items:
+      title: Root Type for subscription Items
+      description: The root of the subscription Items type's schema.
+      type: object
+      properties:
+        id:
+          description: Unique identifier for the object.
+          type: string
+        object:
+          description: String representing the object’s type. Objects of the same
+            type share the same value. Always has the value “list”.
+          type: string
+        created:
+          format: int32
+          description: Time at which the object was created. Measured in seconds since
+            the Unix epoch.
+          type: integer
+        plan:
+          $ref: '#/components/schemas/plan'
+          description: Hash describing the plan the customer is subscribed to.
+          properties:
+            id:
+              type: string
+            object:
+              type: string
+            amount:
+              format: int32
+              type: integer
+            created:
+              format: int32
+              type: integer
+            currency:
+              type: string
+            interval:
+              type: string
+            interval_count:
+              format: int32
+              type: integer
+            livemode:
+              type: boolean
+            metadata:
+              type: object
+            nickname:
+              type: object
+            product:
+              type: string
+            trial_period_days:
+              format: int32
+              type: integer
+        quantity:
+          format: int32
+          description: The quantity of the plan to which the customer should be subscribed.
+          type: integer
+        subscription:
+          type: string
+    line_item:
+      title: Root Type for Line Item
+      description: The root of the Line Item type's schema.
+      type: object
+      properties:
+        id:
+          description: Unique identifier for the object.
+          type: string
+        object:
+          description: String representing the object’s type. Objects of the same
+            type share the same value.
+          type: string
+        amount:
+          format: int32
+          description: The amount, in cents.
+          type: integer
+        currency:
+          description: Three-letter ISO currency code, in lowercase. Must be a supported
+            currency.
+          type: string
+        description:
+          description: An arbitrary string attached to the object. Often useful for
+            displaying to users.
+          type: string
+        discountable:
+          description: If true, discounts will apply to this line item. Always false
+            for prorations.
+          type: boolean
+        livemode:
+          description: Whether this is a test line item.
+          type: boolean
+        period:
+          $ref: '#/components/schemas/period'
+          description: The period this line_item covers. For subscription line items,
+            this is the subscription period. For prorations, this starts when the
+            proration was calculated, and ends at the period end of the subscription.
+            For invoice items, this is the time at which the invoice item was created,
+            so the period start and end are the same time.
+          properties:
+            start:
+              format: int32
+              type: integer
+            end:
+              format: int32
+              type: integer
+        plan:
+          $ref: '#/components/schemas/plan'
+          description: The plan of the subscription, if the line item is a subscription
+            or a proration.
+          properties:
+            id:
+              type: string
+            object:
+              type: string
+            amount:
+              format: int32
+              type: integer
+            created:
+              format: int32
+              type: integer
+            currency:
+              type: string
+            interval:
+              type: string
+            interval_count:
+              format: int32
+              type: integer
+            livemode:
+              type: boolean
+            metadata:
+              type: object
+            nickname:
+              type: object
+            product:
+              type: string
+            trial_period_days:
+              format: int32
+              type: integer
+        proration:
+          description: Whether this is a proration.
+          type: boolean
+        quantity:
+          format: int32
+          description: The quantity of the subscription, if the line item is a subscription
+            or a proration.
+          type: integer
+        subscription:
+          description: When type is invoiceitem, the subscription that the invoice
+            item pertains to, if any. Left blank when type is already subscription,
+            as it’d be redundant with id.
+          type: string
+        subscription_item:
+          type: string
+        type:
+          description: A string identifying the type of the source of this line item,
+            either an invoiceitem or a subscription.
+          type: string

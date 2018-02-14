@@ -4,17 +4,21 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "arapaho": "^1.0.1",
     "shins": "^2.2.0",
     "swagger-node-codegen": "^1.1.0",
     "widdershins": "^3.0.2"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "http-server": "^0.11.1"
+  },
   "scripts": {
     "swagger": "snc ./swagger.yaml -o ./api",
-    "docs": "widdershins ./swagger.yaml ./docs/index.md",
-    "shins": "node shins.js",
-    "docs:watch": "node node_modules/shins/arapaho.js"
+    "docs:widdershins": "widdershins -e ./widdershins.json ./openapi.yaml -o ./docs/markdown.md",
+    "docs:shins": "node shins.js",
+    "docs:slate:build": "cd slate ; bundle install ; bundle exec middleman build --clean; cd - ; mv ./slate/build ./docs",
+    "docs:build": "npm run docs:widdershins",
+    "docs:watch": "bundle exec middleman server",
+    "docs:open": "open https://walkward.github.io/chatable-api"
   },
   "repository": {
     "type": "git",
