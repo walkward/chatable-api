@@ -13,7 +13,7 @@ servers:
 paths:
   /users:
     post:
-      summary: createuser
+      summary: createUser
       description: Create a new user.
       responses:
         201:
@@ -31,7 +31,7 @@ paths:
               $ref: '#/components/schemas/userBody'
   /users/{id}:
     get:
-      summary: getuser
+      summary: getUser
       description: Returns the full user object.
       parameters:
       - name: id
@@ -50,7 +50,7 @@ paths:
         404:
           description: No user could be found for the given id.
     put:
-      summary: updateuser
+      summary: updateUser
       description: Updates the specified user object.
       parameters:
       - name: id
@@ -77,7 +77,7 @@ paths:
               $ref: '#/components/schemas/userBody'
         required: true
     delete:
-      summary: deleteuser
+      summary: deleteUser
       description: Deletes the user and all of their associated resources.
       parameters:
       - name: id
@@ -180,7 +180,7 @@ paths:
         type: string
   /users/{id}/billing/invoices:
     get:
-      summary: getinvoices
+      summary: getInvoices
       description: Returns the invoices associated with a users account.
       responses:
         200:
@@ -217,7 +217,7 @@ paths:
         type: integer
   /users/{id}/billing/invoices/{invoiceId}:
     get:
-      summary: getinvoice
+      summary: getInvoice
       description: Returns an invoice object per the given invoiceId.
       responses:
         200:
@@ -243,39 +243,9 @@ paths:
       required: true
       schema:
         type: string
-  /users/{id}/billing/source:
-    get:
-      summary: getBillingsource
-      description: Returns the billing source associated with a users account.
-      responses:
-        200:
-          description: user billing source successfully retrieved.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/sources'
-        204:
-          description: user billing source does not exist.
-        401:
-          description: Authentication failed.
-        404:
-          description: Bad user id.
-    put:
-      summary: updateBillingsource
-      description: Updates the billing source associated with a users account.
-      responses:
-        200:
-          description: user billing source successfully updated.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/sources'
-        401:
-          description: Authentication failed.
-        404:
-          description: Bad user id or source does not exist.
+  /users/{id}/billing/sources:
     post:
-      summary: createBillingsource
+      summary: createSource
       description: Create a new billing source associated with a users account.
       responses:
         201:
@@ -294,8 +264,46 @@ paths:
             schema:
               $ref: '#/components/schemas/sourceBody'
         required: true
+    parameters:
+    - name: id
+      in: path
+      description: The users primary id
+      required: true
+      schema:
+        type: string
+  /users/{id}/billing/sources/{sourceId}:
+    get:
+      summary: getSource
+      description: Returns the billing source associated with a users account.
+      responses:
+        200:
+          description: user billing source successfully retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/sources'
+        204:
+          description: user billing source does not exist.
+        401:
+          description: Authentication failed.
+        404:
+          description: Bad user id.
+    put:
+      summary: updateSource
+      description: Updates the billing source associated with a users account.
+      responses:
+        200:
+          description: user billing source successfully updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/sources'
+        401:
+          description: Authentication failed.
+        404:
+          description: Bad user id or source does not exist.
     delete:
-      summary: deleteBillingsource
+      summary: deleteSource
       description: Delete the billing source associated with a users account.
       responses:
         200:
@@ -312,6 +320,11 @@ paths:
     - name: id
       in: path
       description: The users primary id
+      required: true
+      schema:
+        type: string
+    - name: sourceId
+      in: path
       required: true
       schema:
         type: string

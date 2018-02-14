@@ -1,0 +1,11 @@
+{
+    "extends": "standard",
+    "globals": {
+      $: true,
+      fetch: false,
+      Rollbar: false
+    },
+    "rules": {
+      "prefer-promise-reject-errors": 0
+    }
+}

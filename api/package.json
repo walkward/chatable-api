@@ -3,8 +3,12 @@
   "description": "Connectable API",
   "version": "1.0.0",
   "scripts": {
+    "swagger:build": "rm -r ./src/routes ./src/services ./src/index.js && snc ./openapi.yaml -o ./src -t ./templates",
     "start": "node src/bin/www",
-    "dev": "node src/bin/www | bunyan"
+    "dev": "node src/bin/www | bunyan",
+    "test": "nyc ava",
+    "test:debug": "node --inspect node_modules/ava/profile.js ./tests/test.js",
+    "test:watch": "ava --watch"
   },
   "dependencies": {
     "body-parser": "1.13.2",
@@ -12,5 +16,11 @@
     "cookie-parser": "1.3.5",
     "express": "4.13.1",
     "node-yaml-config": "0.0.3"
+  },
+  "devDependencies": {
+    "swagger-node-codegen": "^1.1.0",
+    "ava": "^1.0.0-beta.2",
+    "nyc": "^11.4.1",
+    "supertest": "^3.0.0"
   }
 }
