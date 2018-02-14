@@ -3,7 +3,7 @@ defaults: &defaults
     port: 3000
 
   logger:
-    name: Swagger Petstore
+    name: Connectable
     level: debug
     levels:
       trace:

@@ -24,10 +24,6 @@ paths:
                 $ref: '#/components/schemas/customer'
         401:
           description: Authentication failed.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
       requestBody:
         content:
           application/json:
@@ -51,16 +47,8 @@ paths:
                 $ref: '#/components/schemas/user'
         401:
           description: Authentication failed.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
         404:
           description: No user could be found for the given id.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
     put:
       summary: updateuser
       description: Updates the specified user object.
@@ -80,16 +68,8 @@ paths:
                 $ref: '#/components/schemas/user'
         401:
           description: Authentication failed.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
         404:
           description: No user could be found for the given id.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
       requestBody:
         content:
           application/json:
@@ -135,16 +115,8 @@ paths:
                 $ref: '#/components/schemas/customer'
         401:
           description: Authentication failed.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
         404:
           description: A Stripe customer could not be found for the given user id.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
     put:
       summary: updateBilling
       description: Update a stripe customer object.
@@ -157,16 +129,8 @@ paths:
                 $ref: '#/components/schemas/customer'
         401:
           description: Authentication failed.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
         404:
           description: A Stripe customer could not be found for the given user id.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
     post:
       summary: createBilling
       description: Create a new stripe customer object.
@@ -179,16 +143,8 @@ paths:
                 $ref: '#/components/schemas/customer'
         401:
           description: Authentication failed.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
         404:
           description: Bad user id.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
     delete:
       summary: deleteBilling
       description: Delete the stipe customer object.
@@ -201,16 +157,8 @@ paths:
                 type: string
         401:
           description: Authentication failed.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
         404:
           description: A Stripe customer could not be found for the given user id.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
     parameters:
     - name: id
       in: path
@@ -233,23 +181,11 @@ paths:
                   $ref: '#/components/schemas/invoice'
         204:
           description: No invoices could be found for the given user.
-          content:
-            application/json:
-              schema:
-                type: string
         400:
           description: Invalid request body. The message will vary depending on the
             cause.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
         401:
           description: Authentication failed.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
     parameters:
     - name: id
       in: path
@@ -280,16 +216,8 @@ paths:
                 $ref: '#/components/schemas/invoice'
         401:
           description: Authentication failed.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
         404:
           description: Bad user id or invoice could not be found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
     parameters:
     - name: invoiceId
       in: path
@@ -316,22 +244,10 @@ paths:
                 $ref: '#/components/schemas/sources'
         204:
           description: user billing source does not exist.
-          content:
-            application/json:
-              schema:
-                type: string
         401:
           description: Authentication failed.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
         404:
           description: Bad user id.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
     put:
       summary: updateBillingsource
       description: Updates the billing source associated with a users account.
@@ -344,16 +260,8 @@ paths:
                 $ref: '#/components/schemas/sources'
         401:
           description: Authentication failed.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
         404:
           description: Bad user id or source does not exist.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
     post:
       summary: createBillingsource
       description: Create a new billing source associated with a users account.
@@ -366,16 +274,8 @@ paths:
                 $ref: '#/components/schemas/source'
         401:
           description: Authentication failed.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
         404:
           description: Bad user id.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
     delete:
       summary: deleteBillingsource
       description: Delete the billing source associated with a users account.
@@ -388,16 +288,8 @@ paths:
                 type: string
         401:
           description: Authentication failed.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
         404:
           description: Bad user id or billing source not found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
     parameters:
     - name: id
       in: path
@@ -1270,28 +1162,6 @@ components:
         end:
           format: int32
           type: integer
-    error:
-      title: Root Type for error
-      description: The root of the error type's schema.
-      type: object
-      properties:
-        status:
-          description: The status member represents the HTTP status code associated
-            with the problem.
-          type: string
-        source:
-          description: The source member is used to indicate which part of the request
-            document caused the error.
-          type: string
-          properties:
-            pointer:
-              type: string
-        title:
-          description: A generic error message.
-          type: string
-        detail:
-          description: Detailed error message.
-          type: string
     userRequestBody:
       title: Root Type for user
       description: The root of the user type's schema.
