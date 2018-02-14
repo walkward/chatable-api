@@ -222,6 +222,9 @@
             <a href="#Connectable" class="toc-h1 toc-link" data-title="connectable-v1-0-0">Connectable v1.0.0</a>
           </li>
           <li>
+            <a href="#authentication" class="toc-h1 toc-link" data-title="authentication">Authentication</a>
+          </li>
+          <li>
             <a href="#Connectable-Default" class="toc-h1 toc-link" data-title="default">Default</a>
               <ul class="toc-list-h2">
                   <li>
@@ -317,13 +320,19 @@
                     <a href="#tocSperiod" class="toc-h2 toc-link" data-title="period">period</a>
                   </li>
                   <li>
-                    <a href="#tocSuserrequestbody" class="toc-h2 toc-link" data-title="userrequestbody">userRequestBody</a>
-                  </li>
-                  <li>
                     <a href="#tocSsubscription_items" class="toc-h2 toc-link" data-title="subscription_items">subscription_items</a>
                   </li>
                   <li>
                     <a href="#tocSline_item" class="toc-h2 toc-link" data-title="line_item">line_item</a>
+                  </li>
+                  <li>
+                    <a href="#tocScustomerbody" class="toc-h2 toc-link" data-title="customerbody">customerBody</a>
+                  </li>
+                  <li>
+                    <a href="#tocSsourcebody" class="toc-h2 toc-link" data-title="sourcebody">sourceBody</a>
+                  </li>
+                  <li>
+                    <a href="#tocSuserbody" class="toc-h2 toc-link" data-title="userbody">userBody</a>
                   </li>
               </ul>
           </li>
@@ -349,6 +358,27 @@
 </ul>
 
 <p>License: <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0</a></p>
+<h1 id='authentication'>Authentication</h1>
+<ul>
+<li><p>oAuth2 authentication. HTTP Bearer authentication strategy using Passport.</p>
+
+<ul>
+<li>Flow: implicit</li>
+<li>Authorization URL = <a href="https://connectable.auth0.com">https://connectable.auth0.com</a></li>
+</ul></li>
+</ul>
+
+<table><thead>
+<tr>
+<th>Scope</th>
+<th>Scope Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>read:users</td>
+<td>Get a users information.</td>
+</tr>
+</tbody></table>
 
 <h1 id="Connectable-Default">Default</h1>
 <h2 id='post__users'>post__users</h2>
@@ -384,12 +414,9 @@
   </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"phone_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"phone_verified"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
   </span><span class="s2">"picture"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"nickname"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"last_ip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"last_login"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"given_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"family_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
 </span><span class="p">}</span><span class="w">
@@ -408,7 +435,7 @@
 <tr>
 <td>body</td>
 <td>body</td>
-<td><a href="#schemauserrequestbody">userRequestBody</a></td>
+<td><a href="#schemauserbody">userBody</a></td>
 <td>false</td>
 <td>No description</td>
 </tr>
@@ -734,12 +761,9 @@ This operation does not require authentication
   </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"phone_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"phone_verified"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
   </span><span class="s2">"picture"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"nickname"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"last_ip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"last_login"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"given_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"family_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
 </span><span class="p">}</span><span class="w">
@@ -765,7 +789,7 @@ This operation does not require authentication
 <tr>
 <td>body</td>
 <td>body</td>
-<td><a href="#schemauserrequestbody">userRequestBody</a></td>
+<td><a href="#schemauserbody">userBody</a></td>
 <td>true</td>
 <td>No description</td>
 </tr>
@@ -1155,8 +1179,10 @@ This operation does not require authentication
   <span class="na">method</span><span class="p">:</span> <span class="s1">'PUT'</span><span class="p">,</span>
   <span class="na">uri</span><span class="p">:</span> <span class="s1">'https://connectable.heroku.com/api/users/{id}/billing'</span><span class="p">,</span>
   <span class="kr">const</span> <span class="nx">headers</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">'Content-Type'</span><span class="p">:</span><span class="s1">'application/json'</span><span class="p">,</span>
     <span class="s1">'Accept'</span><span class="p">:</span><span class="s1">'application/json'</span>
-  <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="na">body</span><span class="p">:</span> <span class="nx">body</span>
 <span class="p">}</span>
 <span class="nx">rp</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span>
     <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">result</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span> <span class="nx">result</span> <span class="p">)})</span>
@@ -1170,6 +1196,29 @@ This operation does not require authentication
 
 <p>Update a stripe customer object.</p>
 
+<blockquote>
+<p>Body parameter</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"default_source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"shipping"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"address"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"line1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"line2"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"postal_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"phone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 <h3 id="put__users_{id}_billing-parameters">Parameters</h3>
 
 <table><thead>
@@ -1181,6 +1230,13 @@ This operation does not require authentication
 <th>Description</th>
 </tr>
 </thead><tbody>
+<tr>
+<td>body</td>
+<td>body</td>
+<td><a href="#schemacustomerbody">customerBody</a></td>
+<td>true</td>
+<td>No description</td>
+</tr>
 <tr>
 <td>id</td>
 <td>path</td>
@@ -1381,8 +1437,10 @@ This operation does not require authentication
   <span class="na">method</span><span class="p">:</span> <span class="s1">'POST'</span><span class="p">,</span>
   <span class="na">uri</span><span class="p">:</span> <span class="s1">'https://connectable.heroku.com/api/users/{id}/billing'</span><span class="p">,</span>
   <span class="kr">const</span> <span class="nx">headers</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">'Content-Type'</span><span class="p">:</span><span class="s1">'application/json'</span><span class="p">,</span>
     <span class="s1">'Accept'</span><span class="p">:</span><span class="s1">'application/json'</span>
-  <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="na">body</span><span class="p">:</span> <span class="nx">body</span>
 <span class="p">}</span>
 <span class="nx">rp</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span>
     <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">result</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span> <span class="nx">result</span> <span class="p">)})</span>
@@ -1396,6 +1454,29 @@ This operation does not require authentication
 
 <p>Create a new stripe customer object.</p>
 
+<blockquote>
+<p>Body parameter</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"default_source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"shipping"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"address"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"line1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"line2"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"postal_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"phone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 <h3 id="post__users_{id}_billing-parameters">Parameters</h3>
 
 <table><thead>
@@ -1407,6 +1488,13 @@ This operation does not require authentication
 <th>Description</th>
 </tr>
 </thead><tbody>
+<tr>
+<td>body</td>
+<td>body</td>
+<td><a href="#schemacustomerbody">customerBody</a></td>
+<td>true</td>
+<td>No description</td>
+</tr>
 <tr>
 <td>id</td>
 <td>path</td>
@@ -2818,8 +2906,10 @@ This operation does not require authentication
   <span class="na">method</span><span class="p">:</span> <span class="s1">'POST'</span><span class="p">,</span>
   <span class="na">uri</span><span class="p">:</span> <span class="s1">'https://connectable.heroku.com/api/users/{id}/billing/source'</span><span class="p">,</span>
   <span class="kr">const</span> <span class="nx">headers</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">'Content-Type'</span><span class="p">:</span><span class="s1">'application/json'</span><span class="p">,</span>
     <span class="s1">'Accept'</span><span class="p">:</span><span class="s1">'application/json'</span>
-  <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="na">body</span><span class="p">:</span> <span class="nx">body</span>
 <span class="p">}</span>
 <span class="nx">rp</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span>
     <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">result</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span> <span class="nx">result</span> <span class="p">)})</span>
@@ -2833,6 +2923,27 @@ This operation does not require authentication
 
 <p>Create a new billing source associated with a users account.</p>
 
+<blockquote>
+<p>Body parameter</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"address_city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"address_country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"address_line1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"address_line2"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"address_state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"address_zip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"exp_month"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"exp_year"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"object"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"default_for_currency"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"cvc"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 <h3 id="post__users_{id}_billing_source-parameters">Parameters</h3>
 
 <table><thead>
@@ -2844,6 +2955,13 @@ This operation does not require authentication
 <th>Description</th>
 </tr>
 </thead><tbody>
+<tr>
+<td>body</td>
+<td>body</td>
+<td><a href="#schemasourcebody">sourceBody</a></td>
+<td>true</td>
+<td>No description</td>
+</tr>
 <tr>
 <td>id</td>
 <td>path</td>
@@ -4825,99 +4943,6 @@ This operation does not require authentication
 </tr>
 </tbody></table>
 
-<h2 id="tocSuserrequestbody">userRequestBody</h2>
-
-<p><a id="schemauserrequestbody"></a></p>
-<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"phone_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"phone_verified"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"picture"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"nickname"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"last_ip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"last_login"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"given_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"family_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre><h3 id='properties-16'>Properties</h3>
-<table><thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>email</td>
-<td>string</td>
-<td>false</td>
-<td>The user&#39;s email</td>
-</tr>
-<tr>
-<td>username</td>
-<td>string</td>
-<td>false</td>
-<td>The user&#39;s username</td>
-</tr>
-<tr>
-<td>phone_number</td>
-<td>string</td>
-<td>false</td>
-<td>The user&#39;s phone number (following the E.164 recommendation), only valid for users from SMS connections</td>
-</tr>
-<tr>
-<td>phone_verified</td>
-<td>boolean</td>
-<td>false</td>
-<td>true if the user&#39;s phone_number is verified, false otherwise, only valid for users from SMS connections</td>
-</tr>
-<tr>
-<td>picture</td>
-<td>string</td>
-<td>false</td>
-<td>The user&#39;s picture</td>
-</tr>
-<tr>
-<td>name</td>
-<td>string</td>
-<td>false</td>
-<td>The user&#39;s name</td>
-</tr>
-<tr>
-<td>nickname</td>
-<td>string</td>
-<td>false</td>
-<td>The user&#39;s nickname</td>
-</tr>
-<tr>
-<td>last_ip</td>
-<td>string</td>
-<td>false</td>
-<td>The last login IP address</td>
-</tr>
-<tr>
-<td>last_login</td>
-<td>string</td>
-<td>false</td>
-<td>The last login date for this user</td>
-</tr>
-<tr>
-<td>given_name</td>
-<td>string</td>
-<td>false</td>
-<td>The user&#39;s given name (first name)</td>
-</tr>
-<tr>
-<td>family_name</td>
-<td>string</td>
-<td>false</td>
-<td>The user&#39;s family name (last name)</td>
-</tr>
-</tbody></table>
-
 <h2 id="tocSsubscription_items">subscription_items</h2>
 
 <p><a id="schemasubscription_items"></a></p>
@@ -4941,7 +4966,7 @@ This operation does not require authentication
   </span><span class="s2">"quantity"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
   </span><span class="s2">"subscription"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h3 id='properties-17'>Properties</h3>
+</span></code></pre><h3 id='properties-16'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -5022,7 +5047,7 @@ This operation does not require authentication
   </span><span class="s2">"subscription_item"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h3 id='properties-18'>Properties</h3>
+</span></code></pre><h3 id='properties-17'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -5114,6 +5139,268 @@ This operation does not require authentication
 <td>string</td>
 <td>false</td>
 <td>A string identifying the type of the source of this line item, either an invoiceitem or a subscription.</td>
+</tr>
+</tbody></table>
+
+<h2 id="tocScustomerbody">customerBody</h2>
+
+<p><a id="schemacustomerbody"></a></p>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"default_source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"shipping"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"address"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"line1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"line2"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"postal_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"phone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre><h3 id='properties-18'>Properties</h3>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>false</td>
+<td>Unique identifier for the object.</td>
+</tr>
+<tr>
+<td>currency</td>
+<td>string</td>
+<td>false</td>
+<td>Three-letter ISO code for the currency the customer can be charged in for recurring billing purposes.</td>
+</tr>
+<tr>
+<td>default_source</td>
+<td>string</td>
+<td>false</td>
+<td>ID of the default source attached to this customer.</td>
+</tr>
+<tr>
+<td>description</td>
+<td>string</td>
+<td>false</td>
+<td>An arbitrary string attached to the object. Often useful for displaying to users.</td>
+</tr>
+<tr>
+<td>email</td>
+<td>string</td>
+<td>false</td>
+<td>The customer’s email address.</td>
+</tr>
+<tr>
+<td>shipping</td>
+<td><a href="#schemashipping">shipping</a></td>
+<td>false</td>
+<td>No description</td>
+</tr>
+</tbody></table>
+
+<h2 id="tocSsourcebody">sourceBody</h2>
+
+<p><a id="schemasourcebody"></a></p>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"address_city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"address_country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"address_line1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"address_line2"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"address_state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"address_zip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"exp_month"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"exp_year"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"object"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"default_for_currency"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"cvc"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre><h3 id='properties-19'>Properties</h3>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>address_city</td>
+<td>string</td>
+<td>false</td>
+<td>City/District/Suburb/Town/Village.</td>
+</tr>
+<tr>
+<td>address_country</td>
+<td>string</td>
+<td>false</td>
+<td>Billing address country, if provided when creating card.</td>
+</tr>
+<tr>
+<td>address_line1</td>
+<td>string</td>
+<td>false</td>
+<td>address line 1 (Street address/PO Box/Company name).</td>
+</tr>
+<tr>
+<td>address_line2</td>
+<td>string</td>
+<td>false</td>
+<td>address line 2 (Apartment/Suite/Unit/Building).</td>
+</tr>
+<tr>
+<td>address_state</td>
+<td>string</td>
+<td>false</td>
+<td>State/County/Province/Region.</td>
+</tr>
+<tr>
+<td>address_zip</td>
+<td>string</td>
+<td>false</td>
+<td>Zip/Postal Code.</td>
+</tr>
+<tr>
+<td>country</td>
+<td>string</td>
+<td>false</td>
+<td>Two-letter ISO code representing the country of the card. You could use this attribute to get a sense of the international breakdown of cards you’ve collected.</td>
+</tr>
+<tr>
+<td>exp_month</td>
+<td>integer(int32)</td>
+<td>true</td>
+<td>Two digit number representing the card&#39;s expiration month.</td>
+</tr>
+<tr>
+<td>exp_year</td>
+<td>integer(int32)</td>
+<td>true</td>
+<td>Two or four digit number representing the card&#39;s expiration year.</td>
+</tr>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>false</td>
+<td>Cardholder&#39;s full name.</td>
+</tr>
+<tr>
+<td>source</td>
+<td>string</td>
+<td>true</td>
+<td>Either a token, like the ones returned by Stripe.js, or a dictionary containing a user&#39;s credit card details (with the options shown below). Stripe will automatically validate the card.</td>
+</tr>
+<tr>
+<td>object</td>
+<td>string</td>
+<td>true</td>
+<td>The type of payment source. Should be &quot;card&quot;.</td>
+</tr>
+<tr>
+<td>default_for_currency</td>
+<td>boolean</td>
+<td>false</td>
+<td>Only applicable on accounts (not customers or recipients). If you set this to true (or if this is the first external account being added in this currency) this card will become the default external account for its currency.</td>
+</tr>
+<tr>
+<td>cvc</td>
+<td>string</td>
+<td>true</td>
+<td>Card security code. Highly recommended to always include this value, but it&#39;s only required for accounts based in European countries.</td>
+</tr>
+<tr>
+<td>number</td>
+<td>string</td>
+<td>true</td>
+<td>The card number, as a string without any separators.</td>
+</tr>
+</tbody></table>
+
+<h2 id="tocSuserbody">userBody</h2>
+
+<p><a id="schemauserbody"></a></p>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"phone_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"picture"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"nickname"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"given_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"family_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre><h3 id='properties-20'>Properties</h3>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>email</td>
+<td>string</td>
+<td>false</td>
+<td>The user&#39;s email</td>
+</tr>
+<tr>
+<td>username</td>
+<td>string</td>
+<td>false</td>
+<td>The user&#39;s username</td>
+</tr>
+<tr>
+<td>phone_number</td>
+<td>string</td>
+<td>false</td>
+<td>The user&#39;s phone number (following the E.164 recommendation), only valid for users from SMS connections</td>
+</tr>
+<tr>
+<td>picture</td>
+<td>string</td>
+<td>false</td>
+<td>The user&#39;s picture</td>
+</tr>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>false</td>
+<td>The user&#39;s name</td>
+</tr>
+<tr>
+<td>nickname</td>
+<td>string</td>
+<td>false</td>
+<td>The user&#39;s nickname</td>
+</tr>
+<tr>
+<td>given_name</td>
+<td>string</td>
+<td>false</td>
+<td>The user&#39;s given name (first name)</td>
+</tr>
+<tr>
+<td>family_name</td>
+<td>string</td>
+<td>false</td>
+<td>The user&#39;s family name (last name)</td>
 </tr>
 </tbody></table>
 

@@ -28,7 +28,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/userRequestBody'
+              $ref: '#/components/schemas/userBody'
   /users/{id}:
     get:
       summary: getuser
@@ -74,7 +74,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/userRequestBody'
+              $ref: '#/components/schemas/userBody'
         required: true
     delete:
       summary: deleteuser
@@ -131,6 +131,12 @@ paths:
           description: Authentication failed.
         404:
           description: A Stripe customer could not be found for the given user id.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/customerBody'
+        required: true
     post:
       summary: createBilling
       description: Create a new stripe customer object.
@@ -145,6 +151,12 @@ paths:
           description: Authentication failed.
         404:
           description: Bad user id.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/customerBody'
+        required: true
     delete:
       summary: deleteBilling
       description: Delete the stipe customer object.
@@ -276,6 +288,12 @@ paths:
           description: Authentication failed.
         404:
           description: Bad user id.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/sourceBody'
+        required: true
     delete:
       summary: deleteBillingsource
       description: Delete the billing source associated with a users account.
@@ -1162,46 +1180,6 @@ components:
         end:
           format: int32
           type: integer
-    userRequestBody:
-      title: Root Type for user
-      description: The root of the user type's schema.
-      type: object
-      properties:
-        email:
-          description: The user's email
-          type: string
-        username:
-          description: The user's username
-          type: string
-        phone_number:
-          description: The user's phone number (following the E.164 recommendation),
-            only valid for users from SMS connections
-          type: string
-        phone_verified:
-          description: true if the user's phone_number is verified, false otherwise,
-            only valid for users from SMS connections
-          type: boolean
-        picture:
-          description: The user's picture
-          type: string
-        name:
-          description: The user's name
-          type: string
-        nickname:
-          description: The user's nickname
-          type: string
-        last_ip:
-          description: The last login IP address
-          type: string
-        last_login:
-          description: The last login date for this user
-          type: string
-        given_name:
-          description: The user's given name (first name)
-          type: string
-        family_name:
-          description: The user's family name (last name)
-          type: string
     subscription_items:
       title: Root Type for subscription Items
       description: The root of the subscription Items type's schema.
@@ -1354,3 +1332,137 @@ components:
           description: A string identifying the type of the source of this line item,
             either an invoiceitem or a subscription.
           type: string
+    customerBody:
+      title: Root Type for customer
+      description: The root of the customer type's schema.
+      type: object
+      properties:
+        id:
+          description: Unique identifier for the object.
+          type: string
+        currency:
+          description: Three-letter ISO code for the currency the customer can be
+            charged in for recurring billing purposes.
+          type: string
+        default_source:
+          description: ID of the default source attached to this customer.
+          type: string
+        description:
+          description: An arbitrary string attached to the object. Often useful for
+            displaying to users.
+          type: string
+        email:
+          description: The customer’s email address.
+          type: string
+        shipping:
+          $ref: '#/components/schemas/shipping'
+          description: Mailing and shipping address for the customer. Appears on invoices
+            emailed to this customer.
+    sourceBody:
+      title: Root Type for source
+      description: The root of the source type's schema.
+      required:
+      - number
+      - source
+      - cvc
+      - exp_year
+      - exp_month
+      - object
+      type: object
+      properties:
+        address_city:
+          description: City/District/Suburb/Town/Village.
+          type: string
+        address_country:
+          description: Billing address country, if provided when creating card.
+          type: string
+        address_line1:
+          description: address line 1 (Street address/PO Box/Company name).
+          type: string
+        address_line2:
+          description: address line 2 (Apartment/Suite/Unit/Building).
+          type: string
+        address_state:
+          description: State/County/Province/Region.
+          type: string
+        address_zip:
+          description: Zip/Postal Code.
+          type: string
+        country:
+          description: Two-letter ISO code representing the country of the card. You
+            could use this attribute to get a sense of the international breakdown
+            of cards you’ve collected.
+          type: string
+        exp_month:
+          format: int32
+          description: Two digit number representing the card's expiration month.
+          type: integer
+        exp_year:
+          format: int32
+          description: Two or four digit number representing the card's expiration
+            year.
+          type: integer
+        name:
+          description: Cardholder's full name.
+          type: string
+        source:
+          description: Either a token, like the ones returned by Stripe.js, or a dictionary
+            containing a user's credit card details (with the options shown below).
+            Stripe will automatically validate the card.
+          type: string
+        object:
+          description: The type of payment source. Should be "card".
+          type: string
+        default_for_currency:
+          description: Only applicable on accounts (not customers or recipients).
+            If you set this to true (or if this is the first external account being
+            added in this currency) this card will become the default external account
+            for its currency.
+          type: boolean
+        cvc:
+          description: Card security code. Highly recommended to always include this
+            value, but it's only required for accounts based in European countries.
+          type: string
+        number:
+          description: The card number, as a string without any separators.
+          type: string
+    userBody:
+      title: Root Type for user
+      description: The root of the user type's schema.
+      type: object
+      properties:
+        email:
+          description: The user's email
+          type: string
+        username:
+          description: The user's username
+          type: string
+        phone_number:
+          description: The user's phone number (following the E.164 recommendation),
+            only valid for users from SMS connections
+          type: string
+        picture:
+          description: The user's picture
+          type: string
+        name:
+          description: The user's name
+          type: string
+        nickname:
+          description: The user's nickname
+          type: string
+        given_name:
+          description: The user's given name (first name)
+          type: string
+        family_name:
+          description: The user's family name (last name)
+          type: string
+  securitySchemes:
+    Auth0 Access Token:
+      type: oauth2
+      description: HTTP Bearer authentication strategy using Passport.
+      flows:
+        implicit:
+          authorizationUrl: https://connectable.auth0.com
+          refreshUrl: https://connectable.auth0.com/.well-known/jwks.json
+          scopes:
+            read:users: Get a users information.
